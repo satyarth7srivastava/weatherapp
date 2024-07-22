@@ -9,7 +9,9 @@ function App() {
   const getData = async () => {
     setPage(2);
     try {
-      const resLoc = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city.split(' ').join('_')},IN&limit=5&appid=${import.meta.env.VITE_API_BASE_URL}`);      const res = await axios.get(`http://api.openweathermap.org/data/2.5/weather?lat=${resLoc.data[0].lat}&lon=${resLoc.data[0].lon}&appid=${import.meta.env.VITE_API_BASE_URL}`);      setWeather(res.data);
+      const resLoc = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${city.split(' ').join('_')},IN&limit=5&appid=${import.meta.env.VITE_VERCEL_ENV_URL}`);      
+      const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${resLoc.data[0].lat}&lon=${resLoc.data[0].lon}&appid=${import.meta.env.VITE_VERCEL_ENV_URL}`);     
+      setWeather(res.data);
       setPage(3);
     } catch (error) {
       setPage(4);
@@ -29,7 +31,7 @@ function App() {
     )
   } else if (page === 2) {
     return (
-      <div className='container'>
+      <div className='container loading'>
         loading...
       </div>
     )
